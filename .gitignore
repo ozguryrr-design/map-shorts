@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+assets/fonts/
+out/
+ref/
+projects/*
+!projects/.gitkeep
+**/stills/
+**/contact_sheet.png
+**/contact*.png
+**/sfx.wav

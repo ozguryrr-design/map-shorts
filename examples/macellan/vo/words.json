@@ -1,0 +1,397 @@
+[
+{
+"word": "20 Eylül",
+"start": 0.096,
+"end": 0.814
+},
+{
+"word": "1519.",
+"start": 0.814,
+"end": 2.087
+},
+{
+"word": "Beş",
+"start": 3.171,
+"end": 3.461
+},
+{
+"word": "gemi",
+"start": 3.681,
+"end": 3.9
+},
+{
+"word": "ve",
+"start": 3.9,
+"end": 4.028
+},
+{
+"word": "yaklaşık",
+"start": 4.028,
+"end": 4.502
+},
+{
+"word": "270",
+"start": 4.525,
+"end": 5.139
+},
+{
+"word": "denizci",
+"start": 5.139,
+"end": 5.637
+},
+{
+"word": "batıya",
+"start": 5.799,
+"end": 6.157
+},
+{
+"word": "doğru",
+"start": 6.157,
+"end": 6.412
+},
+{
+"word": "yola",
+"start": 6.412,
+"end": 6.586
+},
+{
+"word": "çıkıyor",
+"start": 6.586,
+"end": 7.025
+},
+{
+"word": "Hedef",
+"start": 8.125,
+"end": 8.623
+},
+{
+"word": "Baharat",
+"start": 8.75,
+"end": 9.167
+},
+{
+"word": "Adaları",
+"start": 9.167,
+"end": 9.595
+},
+{
+"word": "Atlantik’i",
+"start": 10.671,
+"end": 11.424
+},
+{
+"word": "aşıp",
+"start": 11.424,
+"end": 11.701
+},
+{
+"word": "Güney",
+"start": 11.713,
+"end": 11.968
+},
+{
+"word": "Amerika’nın",
+"start": 11.968,
+"end": 12.546
+},
+{
+"word": "ucunda",
+"start": 12.546,
+"end": 12.917
+},
+{
+"word": "bir",
+"start": 12.917,
+"end": 13.079
+},
+{
+"word": "geçit",
+"start": 13.079,
+"end": 13.356
+},
+{
+"word": "buluyorlar",
+"start": 13.357,
+"end": 13.935
+},
+{
+"word": "Bugün",
+"start": 15.0,
+"end": 15.579
+},
+{
+"word": "adı",
+"start": 15.579,
+"end": 15.775
+},
+{
+"word": "Macellan",
+"start": 15.775,
+"end": 16.354
+},
+{
+"word": "Boğazı",
+"start": 16.354,
+"end": 16.771
+},
+{
+"word": "Sonra",
+"start": 17.859,
+"end": 18.345
+},
+{
+"word": "önlerinde",
+"start": 18.403,
+"end": 18.889
+},
+{
+"word": "sonsuz",
+"start": 18.889,
+"end": 19.34
+},
+{
+"word": "bir",
+"start": 19.34,
+"end": 19.479
+},
+{
+"word": "okyanus",
+"start": 19.479,
+"end": 19.907
+},
+{
+"word": "uzanıyor",
+"start": 19.907,
+"end": 20.382
+},
+{
+"word": "Pasifik",
+"start": 20.556,
+"end": 21.03
+},
+{
+"word": "Üç",
+"start": 22.072,
+"end": 22.222
+},
+{
+"word": "aydan",
+"start": 22.442,
+"end": 22.801
+},
+{
+"word": "fazla",
+"start": 22.801,
+"end": 23.16
+},
+{
+"word": "boyunca",
+"start": 23.16,
+"end": 23.553
+},
+{
+"word": "hiç",
+"start": 23.553,
+"end": 23.785
+},
+{
+"word": "kara",
+"start": 23.785,
+"end": 23.993
+},
+{
+"word": "görmüyorlar",
+"start": 23.993,
+"end": 24.711
+},
+{
+"word": "Nisan",
+"start": 25.787,
+"end": 26.505
+},
+{
+"word": "1521'de",
+"start": 26.516,
+"end": 27.593
+},
+{
+"word": "Macellan",
+"start": 27.593,
+"end": 28.241
+},
+{
+"word": "Filipinler’de",
+"start": 28.368,
+"end": 29.039
+},
+{
+"word": "bir",
+"start": 29.039,
+"end": 29.178
+},
+{
+"word": "çatışmada",
+"start": 29.178,
+"end": 29.722
+},
+{
+"word": "öldürülüyor",
+"start": 29.722,
+"end": 30.278
+},
+{
+"word": "Seferi",
+"start": 31.389,
+"end": 31.991
+},
+{
+"word": "Juan",
+"start": 31.991,
+"end": 32.28
+},
+{
+"word": "Sebastián",
+"start": 32.28,
+"end": 32.824
+},
+{
+"word": "Elcano",
+"start": 32.824,
+"end": 33.206
+},
+{
+"word": "tamamlıyor",
+"start": 33.206,
+"end": 33.773
+},
+{
+"word": "6 Eylül",
+"start": 34.873,
+"end": 35.637
+},
+{
+"word": "1522'de",
+"start": 35.637,
+"end": 36.829
+},
+{
+"word": "beş",
+"start": 37.014,
+"end": 37.28
+},
+{
+"word": "gemiden",
+"start": 37.28,
+"end": 37.662
+},
+{
+"word": "yalnızca",
+"start": 37.662,
+"end": 38.171
+},
+{
+"word": "biri",
+"start": 38.171,
+"end": 38.472
+},
+{
+"word": "Victoria",
+"start": 38.611,
+"end": 39.19
+},
+{
+"word": "İspanya’ya",
+"start": 39.387,
+"end": 39.954
+},
+{
+"word": "dönüyor",
+"start": 39.954,
+"end": 40.336
+},
+{
+"word": "İçinde",
+"start": 41.435,
+"end": 42.002
+},
+{
+"word": "sadece",
+"start": 42.002,
+"end": 42.5
+},
+{
+"word": "18",
+"start": 42.5,
+"end": 43.032
+},
+{
+"word": "kişi",
+"start": 43.032,
+"end": 43.38
+},
+{
+"word": "Dünyayı",
+"start": 44.41,
+"end": 45.174
+},
+{
+"word": "dolaşan",
+"start": 45.174,
+"end": 45.683
+},
+{
+"word": "ilk",
+"start": 45.729,
+"end": 45.914
+},
+{
+"word": "yolculuk",
+"start": 45.949,
+"end": 46.389
+},
+{
+"word": "tamamlanmıştı",
+"start": 46.389,
+"end": 47.211
+},
+{
+"word": "Üstelik",
+"start": 48.275,
+"end": 48.9
+},
+{
+"word": "tuttukları",
+"start": 48.9,
+"end": 49.421
+},
+{
+"word": "kayıtlara",
+"start": 49.421,
+"end": 49.873
+},
+{
+"word": "göre",
+"start": 49.873,
+"end": 50.127
+},
+{
+"word": "takvimleri",
+"start": 50.15,
+"end": 50.683
+},
+{
+"word": "bir",
+"start": 50.683,
+"end": 50.833
+},
+{
+"word": "gün",
+"start": 50.833,
+"end": 50.995
+},
+{
+"word": "geriydi",
+"start": 51.007,
+"end": 51.412
+}
+]
