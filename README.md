@@ -9,6 +9,23 @@ ve `ffmpeg` ile 1080×1920 / 60 fps render edilir. Ajan (Claude, Gemini, GPT/Cod
 metni okur, sahne sahne görselleri planlar, `scene.py` yazar, kareleri kontrol eder ve
 videoyu üretir.
 
+<p align="center">
+  <img src="docs/media/macellan_intro.webp" width="200" alt="Dünyadan İspanya'ya: filo yola çıkıyor">
+  <img src="docs/media/macellan_bogaz.webp" width="200" alt="Macellan Boğazı">
+  <img src="docs/media/turkiye_gercek_boyut.webp" width="200" alt="Türkiye Almanya'nın üzerinde">
+  <img src="docs/media/macellan_finale.webp" width="200" alt="Dünya turu finali">
+</p>
+
+**Macellan–Elcano seferi** (54 sn, tamamı ajan tarafından kodlandı ve render edildi):
+
+<p align="center"><img src="docs/media/macellan_frames.jpg" width="100%" alt="Macellan örnek kareler"></p>
+
+**Türkiye'nin gerçek boyutu** (29 sn):
+
+<p align="center"><img src="docs/media/turkiye_frames.jpg" width="100%" alt="Türkiye gerçek boyut örnek kareler"></p>
+
+> Önizlemeler sessiz ve küçültülmüştür; gerçek çıktı 1080×1920, 60 fps, seslendirme + efektli MP4'tür.
+
 | Örnek | Konu |
 |---|---|
 | `examples/macellan` | Macellan–Elcano seferi: dünya → İspanya, filo, Macellan Boğazı, Pasifik, Filipinler, dönüş, dünya turu finali |
