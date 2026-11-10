@@ -11,19 +11,61 @@ from PIL import Image
 from .geo import ROOT
 
 PROVIDERS = {
-    # Esri World Imagery - check Esri terms / attribution for commercial use.
-    "esri": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    # EOX Sentinel-2 cloudless 2016 (CC BY 4.0) - attribution required.
-    "s2": "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/{z}/{y}/{x}.jpg",
+    # EOX Sentinel-2 cloudless, 2016 vintage = the only EOX layer under CC BY 4.0
+    # (2017+ layers are CC BY-NC-SA / paid for commercial use - do not switch the layer name).
+    # Commercial use OK; for videos the attribution must be visibly embedded in the video.
+    "s2": dict(
+        url="https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/{z}/{y}/{x}.jpg",
+        max_level=16,
+        commercial=True,
+        license="CC BY 4.0",
+        credit=["EOxCloudless https://cloudless.eox.at by EOX IT Services GmbH",
+                "(Contains modified Copernicus Sentinel data 2016)"],
+    ),
+    # NASA Blue Marble (GIBS): NASA imagery is generally not copyrighted; credit NASA.
+    # Low resolution (max zoom 8, ~600 m/px): good for the globe and continent views only.
+    "nasa": dict(
+        url="https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief_Bathymetry/"
+            "default/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg",
+        max_level=8,
+        commercial=True,
+        license="public domain (NASA)",
+        credit=["Imagery: NASA Blue Marble / GIBS"],
+    ),
+    # Esri World Imagery: sharpest, but commercial use falls under Esri's terms
+    # (ArcGIS account / licence may be required). Personal / non-commercial use.
+    "esri": dict(
+        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        max_level=19,
+        commercial=False,
+        license="Esri terms of use",
+        credit=["Imagery: Esri, Maxar, Earthstar Geographics,", "and the GIS User Community"],
+    ),
 }
+DEFAULT_PROVIDER = "s2"
+# set by render.load_scene() to the scene's TILE_PROVIDER, so Globe() matches the map
+ACTIVE_PROVIDER = None
+# providers actually used in this process (map + globe), for the on-screen credit
+USED_PROVIDERS = []
 TS = 256
 
 
+def provider_name(provider=None):
+    p = provider or ACTIVE_PROVIDER or DEFAULT_PROVIDER
+    if p not in PROVIDERS:
+        raise ValueError(f"unknown TILE_PROVIDER {p!r}; choose one of {sorted(PROVIDERS)}")
+    return p
+
+
 class TileSource:
-    def __init__(self, provider="esri", max_level=13, cache_size=600):
+    def __init__(self, provider=None, max_level=13, cache_size=600):
+        provider = provider_name(provider)
         self.provider = provider
-        self.url = PROVIDERS[provider]
-        self.max_level = max_level
+        self.info = PROVIDERS[provider]
+        self.url = self.info["url"]
+        self.max_level = min(max_level, self.info["max_level"])
+        if provider not in USED_PROVIDERS:
+            USED_PROVIDERS.append(provider)
         self.dir = os.path.join(ROOT, "data", "tiles", provider)
         self.mem = {}
         self.order = []

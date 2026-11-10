@@ -21,7 +21,8 @@ from mapengine.timing import Words, find_vo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H, FPS = 1080, 1920, 60
-TILE_PROVIDER = "esri"      # "s2" = Sentinel-2 cloudless (CC BY 4.0)
+TILE_PROVIDER = "s2"        # "s2" Sentinel-2 2016 (CC BY 4.0, commercial OK) | "nasa" Blue Marble (public domain, low-res) | "esri" (non-commercial)
+ATTRIBUTION = True          # imagery credit on every frame - required by CC BY for "s2"; keep it on
 MAX_LEVEL = 10
 
 # ---- voiceover & timing --------------------------------------------------

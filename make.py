@@ -10,7 +10,8 @@
   stills  <project> t1 t2 ...                           preview PNGs (half res) into <project>/stills
   sheet   <project> [--every 1.5]                       contact sheet PNG of the whole video
   render  <project> [--res 1] [--workers 4]             video only
-  final   <project> [--mix-only]                        video + voice + SFX  ->  out/<name>.mp4
+  final   <project> [--mix-only]                        video + voice + SFX  ->  out/<name>.mp4 (+ _credits.txt)
+  credits <project>                                     imagery / data credits for the description
 
 <project> = a name under projects/ or examples/, or a path to a project folder.
 """
@@ -68,6 +69,8 @@ def cmd_tts(a):
     words = _restore_punct(words, text)
     json.dump(words, open(os.path.join(d, "vo", "words.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=0)
     print(f"{len(words)} words -> {d}/vo/words.json (+ placeholder.mp3)")
+    print("[license] placeholder.mp3 is an unofficial Microsoft Edge voice - for drafts only. "
+          "Before publishing, record your own vo/voice.mp3 and run `make.py align`.")
 
 
 def _restore_punct(words, text):
@@ -109,6 +112,15 @@ def cmd_find(a):
         print("country:", r)
     for r in find_admin1(q)[:15]:
         print("admin1 :", r)
+
+
+def write_credits(scene, path):
+    from mapengine import render as R
+    txt = R.credits_report(scene)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(txt)
+    print(txt.rstrip())
+    print(f"[credits] -> {path}  (paste into the video description)")
 
 
 def main():
@@ -175,6 +187,9 @@ def main():
             from mapengine import audio
             audio.mix_project(pdir, video, os.path.join(out, f"{name}.mp4"))
             audio.mix_project(pdir, video, os.path.join(out, f"{name}_sfx_only.mp4"), with_vo=False)
+            write_credits(scene, os.path.join(out, f"{name}_credits.txt"))
+    elif a.cmd == "credits":
+        write_credits(scene, os.path.join(out, f"{name}_credits.txt"))
     else:
         sys.exit(__doc__)
 

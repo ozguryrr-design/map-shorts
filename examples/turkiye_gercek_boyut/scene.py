@@ -15,7 +15,7 @@ from mapengine.text import draw_text, title_anim, flag_turkey
 
 W, H, FPS = 1080, 1920, 60
 DURATION = 29.2
-TILE_PROVIDER = "esri"
+TILE_PROVIDER = "s2"
 MAX_LEVEL = 10
 
 RED = "#9e1010"

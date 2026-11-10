@@ -17,7 +17,8 @@ Screen: 1080x1920, origin top-left.
 | `VO = [(path, start)]` | no | voice clips, relative to project |
 | `SFX = [(t, kind, kwargs)]` | no | procedural sound effects |
 | `MUSIC = (path, gain_db)` | no | background bed, looped |
-| `TILE_PROVIDER`, `MAX_LEVEL` | no | `"esri"` (default) or `"s2"`, max tile zoom (10) |
+| `TILE_PROVIDER`, `MAX_LEVEL` | no | `"s2"` (default, Sentinel-2 2016, CC BY 4.0, commercial OK), `"nasa"` (Blue Marble, public domain, max zoom 8 - globe/continents only) or `"esri"` (sharpest, non-commercial only); max tile zoom (10) |
+| `ATTRIBUTION` | no | `True` (default): imagery credit drawn small at the top-left of every frame - **required** by CC BY for `"s2"`, keep it on. `False`, a string or a list of lines overrides it |
 
 ## timing — `from mapengine.timing import Words, find_vo`
 * `VW = Words(path_words_json, offset=0.4)`; `VW.at("Pasifik")` start time (prefix match,

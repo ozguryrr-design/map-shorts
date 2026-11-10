@@ -99,10 +99,33 @@ Windows'ta (PowerShell) `.venv/bin/python` yerine `.venv\Scripts\python` yazın:
 * `references/` — ajan için API, stil rehberi ve sahne tarifleri.
 
 ## Lisanslar / Credits
+Varsayılan ayarlarla üretilen video **para kazanılan kanallarda da kullanılabilir**: uydu altlığı
+ticari kullanıma açık bir kaynaktan gelir ve gereken kaynak yazısı videoya otomatik eklenir.
+
+### Uydu altlığı seçenekleri (`scene.py` içinde `TILE_PROVIDER`)
+| Değer | Kaynak | Lisans | Ticari kullanım | Not |
+|---|---|---|---|---|
+| `"s2"` **(varsayılan)** | EOxCloudless Sentinel-2, **2016** | CC BY 4.0 | ✅ kaynak yazısı videoda görünür olmalı | Şehir ölçeğine kadar iyi; 2016 görüntüsü |
+| `"nasa"` | NASA Blue Marble (GIBS) | Kamu malı (NASA) | ✅ "NASA" kaynak olarak belirtilmeli | Düşük çözünürlük: dünya küresi / kıta görünümleri için |
+| `"esri"` | Esri World Imagery | Esri kullanım şartları | ❌ yalnızca kişisel / ticari olmayan | En keskin görüntü; para kazanılan videoda kullanmayın |
+
+* **Kaynak yazısı otomatik:** her karenin sol üst köşesine küçük, yarı saydam bir kaynak satırı
+  çizilir (Shorts arayüzünün ve başlıkların dışında). EOX'in CC BY şartı, videolarda kaynağın
+  **videonun üzerinde görünmesini** istediği için `"s2"` ile `ATTRIBUTION = True` açık kalmalıdır.
+* **Açıklama metni:** `make.py final` ayrıca `out/<ad>_credits.txt` üretir; video açıklamasına
+  yapıştırın (`make.py credits <ad>` ile ayrıca da alınabilir).
+* `"esri"` seçilirse render sırasında ticari kullanım uyarısı basılır.
+* EOX'in 2017 ve sonraki yıllık katmanları ticari olmayan (CC BY-NC-SA) / ücretlidir; kod bilerek
+  yalnızca CC BY 4.0 olan **2016** katmanını kullanır.
+
+### Diğer bileşenler
 * Kod: MIT.
 * Sınır verisi: [Natural Earth](https://www.naturalearthdata.com/) (public domain).
-* Uydu altlığı: varsayılan **Esri World Imagery** — atıf gerekir, ticari kullanım için Esri şartlarını
-  kontrol edin. Alternatif: `TILE_PROVIDER = "s2"` → EOX Sentinel-2 cloudless 2016 (CC BY 4.0,
-  "Sentinel-2 cloudless by EOX IT Services GmbH" atfı ile).
-* Font: Montserrat (SIL OFL). Bayraklar: flagcdn.com.
-* Geçici ses: edge-tts (Microsoft neural voices), hizalama: faster-whisper.
+* Font: Montserrat (SIL OFL). Bayraklar: flagcdn.com (ulusal bayraklar).
+* **Geçici ses (edge-tts) yalnızca taslak içindir:** Microsoft Edge'in sesini resmî olmayan yoldan
+  kullanır. Yayınlamadan önce kendi sesinizi `vo/voice.mp3` olarak koyup `make.py align` çalıştırın;
+  `credits.txt` geçici ses kullanıldıysa uyarır. Hizalama: faster-whisper (MIT).
+
+> Bu bölüm bilgilendirme amaçlıdır, hukuki tavsiye değildir. Lisans şartları değişebilir:
+> [EOxCloudless lisansı](https://cloudless.eox.at/documentation/license),
+> [NASA medya kullanım kuralları](https://www.nasa.gov/nasa-brand-center/images-and-media/).

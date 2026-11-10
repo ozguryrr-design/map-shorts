@@ -7,13 +7,14 @@ import numpy as np
 from PIL import Image
 
 from .geo import CACHE, merc
-from .tiles import TileSource, TS
+from .tiles import TileSource, TS, provider_name
 
 _TEX = {}
 
 
-def texture(provider="esri", level=4):
+def texture(provider=None, level=4):
     """Equirectangular texture (H=2^L*256/2*... ) built once from map tiles."""
+    provider = provider_name(provider)
     key = (provider, level)
     if key in _TEX:
         return _TEX[key]
@@ -46,7 +47,8 @@ def _stars(W, H, n=260, seed=3):
 
 
 class Globe:
-    def __init__(self, W, H, provider="esri", level=4):
+    def __init__(self, W, H, provider=None, level=4):
+        """provider=None -> the scene's TILE_PROVIDER (so the globe and the map match)."""
         self.W, self.H = W, H
         self.tex = texture(provider, level)
         self.TH, self.TW = self.tex.shape[:2]

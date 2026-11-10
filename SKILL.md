@@ -104,6 +104,13 @@ of video on 4-8 cores. Use `--workers 2` on machines with < 8 GB RAM.
 
 ## 6. Deliver
 Tell the user where the files are, the storyboard you used, what is placeholder
-(TTS voice), and anything they should verify (historical accuracy, imagery license:
-Esri World Imagery needs attribution / check terms for commercial use; set
-`TILE_PROVIDER = "s2"` for Sentinel-2 cloudless, CC BY 4.0).
+(TTS voice - must be replaced by their own recording before publishing), and anything
+they should verify (historical accuracy). Point them to `out/<name>_credits.txt` to paste
+into the video description.
+
+**Imagery licence (keep the defaults):** `TILE_PROVIDER = "s2"` (EOxCloudless Sentinel-2
+2016, CC BY 4.0 - commercial use allowed) with `ATTRIBUTION = True` (credit drawn on every
+frame; CC BY requires it to be visible in videos - never turn it off for "s2"). `"nasa"`
+(Blue Marble, public domain, max zoom 8) is fine for globe/continent-only videos. Use
+`"esri"` only if the user explicitly asks and the video is non-commercial; tell them so.
+Never change the EOX layer to a newer year (2017+ is non-commercial / paid).

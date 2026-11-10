@@ -5,7 +5,8 @@ A scene module must define:
     setup() -> state            (called once per worker process)
     camera(t) -> View
     draw(frame, state)          (frame: mapengine.draw.Frame, basemap already drawn)
-optional: TILE_PROVIDER, MAX_LEVEL
+optional: TILE_PROVIDER ("s2" default | "nasa" | "esri"), MAX_LEVEL,
+          ATTRIBUTION (True = imagery credit drawn on every frame | False | "text" | ["line", ...])
 """
 import importlib.util
 import math
@@ -17,6 +18,7 @@ from multiprocessing import get_context
 
 import cairo
 
+from . import tiles as T
 from .draw import Frame
 from .tiles import TileSource
 
@@ -26,11 +28,66 @@ def load_scene(path):
     mod = importlib.util.module_from_spec(spec)
     sys.modules["scene"] = mod
     spec.loader.exec_module(mod)
+    # Globe() without an explicit provider follows the scene's map imagery
+    T.ACTIVE_PROVIDER = T.provider_name(getattr(mod, "TILE_PROVIDER", None))
     return mod
 
 
 def _tiles(scene):
-    return TileSource(getattr(scene, "TILE_PROVIDER", "esri"), getattr(scene, "MAX_LEVEL", 12))
+    return TileSource(getattr(scene, "TILE_PROVIDER", None), getattr(scene, "MAX_LEVEL", 12))
+
+
+def license_warning(scene):
+    p = T.provider_name(getattr(scene, "TILE_PROVIDER", None))
+    if not T.PROVIDERS[p]["commercial"]:
+        print(f"[license] TILE_PROVIDER={p!r} ({T.PROVIDERS[p]['license']}) is for personal / "
+              f"non-commercial use. For monetized videos use TILE_PROVIDER = \"s2\" or \"nasa\".", flush=True)
+
+
+def credit_lines(scene):
+    """Imagery credit drawn on the video (EOX's CC BY terms require it to be visible)."""
+    a = getattr(scene, "ATTRIBUTION", True)
+    if a is False or a is None:
+        return []
+    if isinstance(a, str):
+        return [a]
+    if isinstance(a, (list, tuple)):
+        return list(a)
+    used = T.USED_PROVIDERS or [T.provider_name(getattr(scene, "TILE_PROVIDER", None))]
+    lines = []
+    for p in used:
+        lines += T.PROVIDERS[p]["credit"]
+    return lines
+
+
+def draw_credit(ctx, scene):
+    from .text import draw_text
+    lines = credit_lines(scene)
+    # small, top-left: clear of Shorts/Reels/TikTok UI (bottom 25 %, right 10 %) and of titles (y 220+)
+    for k, line in enumerate(lines):
+        draw_text(ctx, line, 34, 44 + k * 27, size=21, anchor="left", alpha=0.78, weight="SemiBold",
+                  tracking=0.01, shadow=0.9, shadow_blur=3)
+
+
+def credits_report(scene_path):
+    """Text for the video description: imagery + data credits and licence notes."""
+    scene = load_scene(scene_path)
+    _tiles(scene)
+    scene.setup()  # registers the globe's imagery too
+    out = ["Credits / Kaynaklar", ""]
+    for p in T.USED_PROVIDERS:
+        info = T.PROVIDERS[p]
+        out.append(" ".join(info["credit"]) + f"  [{info['license']}]")
+        if not info["commercial"]:
+            out.append(f"  ! {p}: personal / non-commercial use only - check the provider's terms "
+                       f"before monetizing (use TILE_PROVIDER = \"s2\" or \"nasa\").")
+    out.append("Borders: Natural Earth (public domain)")
+    out.append("Font: Montserrat (SIL Open Font License)")
+    vo = [f for f, _ in getattr(scene, "VO", [])]
+    if any("placeholder" in os.path.basename(f) for f in vo):
+        out += ["", "! The voice is the PLACEHOLDER edge-tts voice (Microsoft neural voice, unofficial).",
+                "  Replace it with your own recording (vo/voice.mp3 + make.py align) before publishing."]
+    return "\n".join(out) + "\n"
 
 
 def render_frame(scene, state, tiles, t, res=1.0):
@@ -44,6 +101,7 @@ def render_frame(scene, state, tiles, t, res=1.0):
         tiles.draw(ctx, view, W, H)
     fr = Frame(ctx, surf, view, W, H, t)
     scene.draw(fr, state)
+    draw_credit(ctx, scene)
     surf.flush()
     return surf
 
@@ -90,6 +148,7 @@ def _worker(args):
 def render(scene_path, out, res=1.0, workers=4, crf=16, t0=0.0, t1=None, chunk_s=2.0):
     """Renders in small chunks (resumable: finished chunks are kept)."""
     scene = load_scene(scene_path)
+    license_warning(scene)
     tiles = _tiles(scene)
     prefetch(scene, tiles)
     t1 = scene.DURATION if t1 is None else t1

@@ -25,7 +25,7 @@ _RD = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(_RD)
 
 W, H, FPS = 1080, 1920, 60
-TILE_PROVIDER = "esri"
+TILE_PROVIDER = "s2"
 MAX_LEVEL = 10
 
 # ---- voiceover ----------------------------------------------------------
