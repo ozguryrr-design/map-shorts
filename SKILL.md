@@ -21,14 +21,22 @@ glowing white borders, tinted textured countries, gold routes, smooth camera
 flights, very little text.
 
 All commands run from this skill's folder with its virtualenv:
-`.venv/bin/python make.py ...` (Windows: use WSL).
+`.venv/bin/python make.py ...`.
+**Windows (native, no WSL needed):** the venv python is `.venv\Scripts\python.exe` -
+in PowerShell `.venv\Scripts\python make.py ...`, in Git Bash `.venv/Scripts/python make.py ...`.
+Substitute it in every command below.
 
 ## 0. One-time setup
 ```bash
-bash scripts/setup.sh        # venv, python deps, Natural Earth data, fonts
+bash scripts/setup.sh        # venv, python deps, Natural Earth data, fonts (Linux/macOS/WSL/Git Bash)
 ```
-Requires: Python 3.10+, ffmpeg, cairo (system library). The script tells you
-what is missing. Network access is needed (tiles, data, placeholder TTS).
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1 -InstallFfmpeg   # Windows PowerShell
+```
+Requires: Python 3.10+, ffmpeg, cairo (system library; on Windows pycairo's pip wheel
+bundles it). The script tells you what is missing. Network access is needed (tiles,
+data, placeholder TTS). On Windows, if ffmpeg was just installed, a new terminal may
+be needed before `ffmpeg` is on PATH.
 
 ## 1. Create the project and get word timings
 ```bash

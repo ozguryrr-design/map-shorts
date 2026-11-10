@@ -114,9 +114,12 @@ def render(scene_path, out, res=1.0, workers=4, crf=16, t0=0.0, t1=None, chunk_s
             for i, _ in enumerate(pool.imap_unordered(_worker, jobs)):
                 print(f"[render] chunk {i + 1}/{len(jobs)} done ({time.time() - st:.0f}s)", flush=True)
     lst = os.path.join(tmp, "list.txt")
-    with open(lst, "w") as f:
+    # ffmpeg reads the concat list as UTF-8 (paths like C:\Users\Özgür\... break with the
+    # Windows default code page); forward slashes avoid backslash escaping on Windows.
+    with open(lst, "w", encoding="utf-8") as f:
         for p_ in parts:
-            f.write(f"file '{os.path.abspath(p_)}'\n")
+            ap_ = os.path.abspath(p_).replace("\\", "/").replace("'", "'\\''")
+            f.write(f"file '{ap_}'\n")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst,
                     "-c", "copy", out], check=True)
     print(f"[render] {n} frames in {time.time() - st:.1f}s -> {out}", flush=True)

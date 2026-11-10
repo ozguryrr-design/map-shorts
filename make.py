@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""map-shorts command line.  (Run with the project venv: .venv/bin/python make.py ...)
+"""map-shorts command line.  (Run with the project venv: .venv/bin/python make.py ...
+                             Windows: .venv\\Scripts\\python make.py ...)
 
   new     <name> [--text metin.txt|--text-str "..."]   scaffold projects/<name> from the template
   tts     <project> [--voice tr-TR-AhmetNeural]         placeholder voice + word timings (edge-tts)
@@ -111,6 +112,10 @@ def cmd_find(a):
 
 
 def main():
+    # Windows consoles/pipes may use a legacy code page; never crash on printing a place name
+    for s in (sys.stdout, sys.stderr):
+        if hasattr(s, "reconfigure"):
+            s.reconfigure(errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cmd")
     ap.add_argument("project")

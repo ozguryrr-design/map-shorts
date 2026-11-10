@@ -33,12 +33,24 @@ videoyu üretir.
 
 ## Kurulum / Install
 
+**Linux / macOS**
 ```bash
 git clone https://github.com/ozguryrr-design/map-shorts.git
 cd map-shorts
 bash scripts/setup.sh          # Python venv, bağımlılıklar, Natural Earth verisi, fontlar
 ```
-Gerekenler: Python 3.10+, ffmpeg, cairo kütüphanesi (Linux/macOS; Windows'ta WSL).
+Gerekenler: Python 3.10+, ffmpeg, cairo kütüphanesi.
+
+**Windows (PowerShell, WSL gerekmez)**
+```powershell
+winget install Python.Python.3.12    # yoksa; python.org kurulumunda "Add python.exe to PATH" işaretleyin
+git clone https://github.com/ozguryrr-design/map-shorts.git
+cd map-shorts
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1 -InstallFfmpeg
+```
+`-InstallFfmpeg` ffmpeg'i winget ile kurar (zaten kuruluysa atlanır). Cairo ayrıca kurulmaz:
+pycairo Windows'ta hazır paket (wheel) olarak gelir. Microsoft Store Python'u yerine python.org /
+winget Python'unu kullanın. Git Bash kullanıyorsanız `bash scripts/setup.sh` de çalışır.
 
 ### Ajanınıza tanıtın / Register with your agent
 Klasörün kendisi bir skill'dir (`SKILL.md`). Bu klasörü ajanınızın skill dizinine koyun / bağlayın:
@@ -51,7 +63,12 @@ Klasörün kendisi bir skill'dir (`SKILL.md`). Bu klasörü ajanınızın skill 
 | Gemini CLI, Cursor, diğerleri | depoyu açın ve ajana: *"SKILL.md'yi oku ve uygula"* deyin (`AGENTS.md` de yönlendirir) |
 
 ```bash
-ln -s "$(pwd)" ~/.claude/skills/map-shorts     # örnek
+ln -s "$(pwd)" ~/.claude/skills/map-shorts     # örnek (Linux/macOS)
+```
+```powershell
+# Windows (yönetici izni gerektirmeyen dizin bağlantısı)
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+New-Item -ItemType Junction -Path "$HOME\.claude\skills\map-shorts" -Target (Get-Location)
 ```
 
 ## Kullanım / Usage
@@ -69,6 +86,10 @@ Elle kullanım:
 .venv/bin/python make.py tts  benim_videom          # ya da: vo/voice.mp3 + make.py align
 .venv/bin/python make.py sheet benim_videom         # önizleme kontak sayfası
 .venv/bin/python make.py final benim_videom         # -> out/benim_videom.mp4
+```
+Windows'ta (PowerShell) `.venv/bin/python` yerine `.venv\Scripts\python` yazın:
+```powershell
+.venv\Scripts\python make.py final benim_videom
 ```
 
 ## Nasıl çalışır / How it works

@@ -5,3 +5,4 @@ video from a narration / voiceover / script, read and follow `SKILL.md` (workflo
 then `references/STYLE.md`, `references/RECIPES.md` and `references/API.md`.
 Working examples: `examples/macellan/scene.py`, `examples/turkiye_gercek_boyut/scene.py`.
 User projects go to `projects/<name>/`; outputs to `out/`.
+On Windows, use `scripts\setup.ps1` for setup and `.venv\Scripts\python` instead of `.venv/bin/python`.
